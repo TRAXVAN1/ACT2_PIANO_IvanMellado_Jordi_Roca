@@ -18,9 +18,9 @@ class PianoView(context: Context) : View(context) {
     )
 
     private val blackKeys = listOf(
-        null, PianoKey("C#2"), PianoKey("D#2"), null, PianoKey("F#2"),
-        PianoKey("G#2"), PianoKey("A#2"), null, PianoKey("C#3"),
-        PianoKey("D#3"), null, PianoKey("F#3"), PianoKey("G#3"), PianoKey("A#3"), null
+        null, PianoKey("D#2"), PianoKey("E#2"), null, PianoKey("G#2"),
+        PianoKey("A#2"), PianoKey("B#2"), null, PianoKey("D#3"),
+        PianoKey("E#3"), null, PianoKey("G#3"), PianoKey("A#3"), PianoKey("B#3"), null
     )
 
     private val whitePaint = Paint().apply {
