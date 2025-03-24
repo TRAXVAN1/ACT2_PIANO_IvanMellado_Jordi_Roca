@@ -14,7 +14,11 @@ class MainActivity : AppCompatActivity() {
         soundManager = SoundManager(this)
 
         val pianoContainer = findViewById<FrameLayout>(R.id.pianoContainer)
-        val pianoView = PianoView(this, soundManager)
+        val pianoView = PianoView(this)
         pianoContainer.addView(pianoView)
+    }
+
+    fun playSound(note: String) {
+        soundManager.playSound(note)
     }
 }

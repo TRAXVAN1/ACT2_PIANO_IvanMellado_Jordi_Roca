@@ -4,40 +4,33 @@ import android.content.Context
 import android.media.MediaPlayer
 
 class SoundManager(private val context: Context) {
-    private val soundMap = mutableMapOf<String, Int>()
-
-    init {
-        soundMap["A2"] = R.raw.a2
-        soundMap["A3"] = R.raw.a3
-        soundMap["Ab2"] = R.raw.ab2
-        soundMap["Ab3"] = R.raw.ab3
-        soundMap["B2"] = R.raw.b2
-        soundMap["B3"] = R.raw.b3
-        soundMap["Bb2"] = R.raw.bb2
-        soundMap["Bb3"] = R.raw.bb3
-        soundMap["C2"] = R.raw.c2
-        soundMap["C3"] = R.raw.c3
-        soundMap["C4"] = R.raw.c4
-        soundMap["Db2"] = R.raw.db2
-        soundMap["Db3"] = R.raw.db3
-        soundMap["D2"] = R.raw.d2
-        soundMap["D3"] = R.raw.d3
-        soundMap["Eb2"] = R.raw.eb2
-        soundMap["Eb3"] = R.raw.eb3
-        soundMap["E2"] = R.raw.e2
-        soundMap["E3"] = R.raw.e3
-        soundMap["F2"] = R.raw.f2
-        soundMap["F3"] = R.raw.f3
-        soundMap["Gb2"] = R.raw.gb2
-        soundMap["Gb3"] = R.raw.gb3
-        soundMap["G2"] = R.raw.g2
-        soundMap["G3"] = R.raw.g3
-    }
+    private val soundMap = mapOf(
+        "C2" to R.raw.c2,
+        "D2" to R.raw.d2,
+        "D#2" to R.raw.db2,
+        "E2" to R.raw.e2,
+        "F2" to R.raw.f2,
+        "G2" to R.raw.g2,
+        "G#2" to R.raw.gb2,
+        "A2" to R.raw.a2,
+        "A#2" to R.raw.ab2,
+        "B2" to R.raw.b2,
+        "C3" to R.raw.c3,
+        "D3" to R.raw.d3,
+        "D#3" to R.raw.db3,
+        "E3" to R.raw.e3,
+        "F3" to R.raw.f3,
+        "G3" to R.raw.g3,
+        "G#3" to R.raw.gb3,
+        "A3" to R.raw.a3,
+        "A#3" to R.raw.ab3,
+        "B3" to R.raw.b3,
+        "C4" to R.raw.c4
+    )
 
     fun playSound(note: String) {
-        val resId = soundMap[note]
-        if (resId != null) {
-            val mediaPlayer = MediaPlayer.create(context, resId)
+        soundMap[note]?.let { soundResId ->
+            val mediaPlayer = MediaPlayer.create(context, soundResId)
             mediaPlayer?.start()
             mediaPlayer?.setOnCompletionListener { it.release() }
         }
