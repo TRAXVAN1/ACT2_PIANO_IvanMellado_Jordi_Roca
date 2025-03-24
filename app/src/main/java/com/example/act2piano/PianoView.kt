@@ -45,7 +45,7 @@ class PianoView(context: Context) : View(context) {
         val keyWidth = width / whiteKeys.size.toFloat()
         val keyHeight = height.toFloat()
 
-        // 🔹 Dibujar teclas blancas
+        // Dibujar teclas blancas
         for (i in whiteKeys.indices) {
             val left = i * keyWidth
             val right = left + keyWidth
@@ -53,7 +53,7 @@ class PianoView(context: Context) : View(context) {
             canvas.drawText(whiteKeys[i].note, left + keyWidth / 2, keyHeight - 50, textPaint)
         }
 
-        // 🔹 Dibujar teclas negras
+        // Dibujar teclas negras
         val blackKeyWidth = keyWidth * 0.6f
         val blackKeyHeight = keyHeight * 0.6f
         for (i in blackKeys.indices) {
@@ -70,35 +70,38 @@ class PianoView(context: Context) : View(context) {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            val keyWidth = width / whiteKeys.size.toFloat()
-            val blackKeyWidth = keyWidth * 0.6f
-            val blackKeyHeight = height * 0.6f
-            val x = event.x
-            val y = event.y
+        val keyWidth = width / whiteKeys.size.toFloat()
+        val blackKeyWidth = keyWidth * 0.6f
+        val blackKeyHeight = height * 0.6f
 
-            // 🔹 Primero comprobamos si se tocó una tecla negra
-            for (i in blackKeys.indices) {
-                blackKeys[i]?.let { key ->
-                    val left = (i + 0.7f) * keyWidth - blackKeyWidth / 2
+        for (i in 0 until event.pointerCount) {
+            val x = event.getX(i)
+            val y = event.getY(i)
+
+            // 🔹 Verificar teclas negras primero
+            for (j in blackKeys.indices) {
+                blackKeys[j]?.let { key ->
+                    val left = (j + 0.7f) * keyWidth - blackKeyWidth / 2
                     val right = left + blackKeyWidth
                     if (x >= left && x <= right && y <= blackKeyHeight) {
-                        Log.d("PianoView", "Tecla negra presionada: ${key.note}")
-                        (context as MainActivity).playSound(key.note)
+                        if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_POINTER_DOWN) {
+                            Log.d("PianoView", "Tecla negra presionada: ${key.note}")
+                            (context as MainActivity).playSound(key.note)
+                        }
                         return true
                     }
                 }
             }
 
-            // 🔹 Si no se tocó una negra, comprobamos las blancas
+            // 🔹 Verificar teclas blancas si no se presionó una negra
             val keyIndex = (x / keyWidth).toInt()
             if (keyIndex in whiteKeys.indices) {
-                Log.d("PianoView", "Tecla blanca presionada: ${whiteKeys[keyIndex].note}")
-                (context as MainActivity).playSound(whiteKeys[keyIndex].note)
+                if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_POINTER_DOWN) {
+                    Log.d("PianoView", "Tecla blanca presionada: ${whiteKeys[keyIndex].note}")
+                    (context as MainActivity).playSound(whiteKeys[keyIndex].note)
+                }
             }
-
-            return true
         }
-        return false
+        return true
     }
 }
