@@ -38,15 +38,16 @@ class PianoView(context: Context) : View(context) {
     }
 
     private val borderPaint = Paint().apply {
-        color = Color.rgb(46, 26, 11)
+        color = Color.rgb(45, 0, 61)
         style = Paint.Style.STROKE
-        strokeWidth = 4f
+        strokeWidth = 6f
     }
 
     private val textPaint = Paint().apply {
         color = Color.rgb(46, 26, 11)
-        textSize = 50f
         textAlign = Paint.Align.CENTER
+        textSize = 40f
+        typeface = Typeface.create("Roboto", Typeface.BOLD)
     }
 
     private val pressedKeys = mutableSetOf<String>()
@@ -64,6 +65,7 @@ class PianoView(context: Context) : View(context) {
             val paint = if (whiteKeys[i].note in pressedKeys) pressedPaint else whitePaint
             canvas.drawRect(left, 0f, right, keyHeight, paint)
             canvas.drawRect(left, 0f, right, keyHeight, borderPaint)
+            textPaint.color = Color.rgb(45, 0, 61)
             canvas.drawText(whiteKeys[i].note, left + keyWidth / 2, keyHeight - 50, textPaint)
         }
 
@@ -78,9 +80,9 @@ class PianoView(context: Context) : View(context) {
                 canvas.drawRect(left, 0f, right, blackKeyHeight, paint)
                 canvas.drawRect(left, 0f, right, blackKeyHeight, borderPaint)
 
-                textPaint.color = Color.WHITE
+                textPaint.color = Color.rgb(252, 249, 179)
                 canvas.drawText(key.note, left + blackKeyWidth / 2, blackKeyHeight - 20, textPaint)
-                textPaint.color = Color.BLACK
+                textPaint.color = Color.rgb(45, 0, 61)
             }
         }
     }
